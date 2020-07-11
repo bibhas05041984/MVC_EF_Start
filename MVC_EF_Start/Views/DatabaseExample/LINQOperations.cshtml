@@ -1,15 +1,32 @@
-﻿@{
-  Layout = null;
+﻿@model MVC_EF_Start.Models.App_Models ;
+@{
+    Layout = null;
 }
 
 <!DOCTYPE html>
 
 <html>
 <head>
-  <meta name="viewport" content="width=device-width" />
-  <title>LINQOperations</title>
+    <meta name="viewport" content="width=device-width" />
+    <title>LINQOperations</title>
 </head>
 <body>
-  <h2>LINQ operations successful</h2>
+    <h2>LINQ operations successful</h2>
+
+    <table>
+        <thead>
+            <tr><th>Company Name</th><th>Student Name</th><th>CourseName</th><th>Grade</th></tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>@Model.companies.name</td>
+                <td>@Model.enrolments.student.Name</td>
+                <td>@Model.enrolments.course.Name</td>
+                <td>@Model.enrolments.grade</td>
+            </tr>
+
+        </tbody>
+    </table>
 </body>
 </html>

@@ -130,23 +130,35 @@ namespace MVC_EF_Start.Controllers
 
     public ViewResult LINQOperations()
     {
-      Company CompanyRead1 = dbContext.Companies
+
+            Enrolment enrolment1 = dbContext.Enrolments
+                                    .Include(e => e.student)
+                                    .Include(e => e.course )
+                                    .Where(e => e.Id == 1)
+                                    .First();
+
+            Company CompanyRead1 = dbContext.Companies
                                       .Where(c => c.symbol == "MCOB")
                                       .First();
 
-      Company CompanyRead2 = dbContext.Companies
-                                      .Include(c => c.Quotes)
-                                      .Where(c => c.symbol == "MCOB")
-                                      .First();
 
-      Quote Quote1 = dbContext.Companies
+            Quote Quote1 = dbContext.Companies
                               .Include(c => c.Quotes)
                               .Where(c => c.symbol == "MCOB")
                               .FirstOrDefault()
                               .Quotes
                               .FirstOrDefault();
 
-      return View();
+
+            App_Models oneappmodel = new App_Models();
+            oneappmodel.enrolments = enrolment1;
+            oneappmodel.companies = CompanyRead1;
+            oneappmodel.quotes = new List<Quote>();
+
+            oneappmodel.quotes.Add(Quote1);
+            //oneappmodel.quotes.Add(MyCompanyQuote2);
+
+            return View(oneappmodel);
     }
 
   }
