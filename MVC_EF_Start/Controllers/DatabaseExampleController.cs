@@ -66,14 +66,47 @@ namespace MVC_EF_Start.Controllers
       MyCompanyQuote2.changeOverTime = 0.56F;
       MyCompanyQuote2.symbol = "MCOB";
 
+      Student oneStudent = new Student();
+            oneStudent.Id = 111;
+            oneStudent.Name = "Bibhas K Bera";
+
+      Course onecourse = new Course();
+            onecourse.Id = 11;
+            onecourse.Name = "MSBAIS";
+
+      Enrolment oneenrollment = new Enrolment();
+            oneenrollment.Id = 1;
+            oneenrollment.course = onecourse;
+            oneenrollment.student = oneStudent;
+            oneenrollment.grade = "A++";
+
+
+
+
+
       dbContext.Companies.Add(MyCompany);
       dbContext.Quotes.Add(MyCompanyQuote1);
       dbContext.Quotes.Add(MyCompanyQuote2);
+            dbContext.Students.Add(oneStudent);
+            dbContext.Courses.Add(onecourse);
+            dbContext.Enrolments.Add(oneenrollment);
 
-      dbContext.SaveChanges();
-      
-      // READ operation
-      Company CompanyRead1 = dbContext.Companies
+            //dbContext.App_Models.Add(oneappmodel);
+
+            dbContext.SaveChanges();
+
+     App_Models oneappmodel = new App_Models();
+            oneappmodel.enrolments = oneenrollment;
+            oneappmodel.companies = MyCompany;
+            oneappmodel.quotes = new List<Quote>();
+
+            oneappmodel.quotes.Add(MyCompanyQuote1);
+            oneappmodel.quotes.Add(MyCompanyQuote2);
+          
+
+
+            // READ operation
+            Company CompanyRead1 = dbContext.Companies
                               .Where(c => c.symbol == "MCOB")
                               .First();
 
@@ -92,7 +125,7 @@ namespace MVC_EF_Start.Controllers
       //dbContext.Companies.Remove(CompanyRead1);
       //await dbContext.SaveChangesAsync();
 
-      return View();
+      return View(oneappmodel);
     }
 
     public ViewResult LINQOperations()

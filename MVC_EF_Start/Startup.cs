@@ -20,11 +20,23 @@ namespace MVC_EF_Start
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
-      // Setup EF connection
-      services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:IEXTrading:ConnectionString"]));
+            // Setup EF connection
+            // services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:IEXTrading:ConnectionString"]));
 
-      // added from MVC template
-      services.AddMvc();
+            //Option 1: Adding Connection String in startup.cs
+            //string connString = "Data Source=./SQLITEDB.sqlite;";
+            //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connString));
+
+
+            //Option 2 : Adding connection String appsettings.json
+            //"IEXTrading": {
+              //  "ConnectionString": "Data Source=./SQLITEDB.sqlite;"
+            //    }
+
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(Configuration["Data:IEXTrading:ConnectionString"]));
+
+            // added from MVC template
+            services.AddMvc();
     }
 
     // this is the version from the MVC template
